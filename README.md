@@ -1,6 +1,6 @@
 <h1> Support Tickets GenAI Lakehouse Pipeline (Databricks) </h1>
 
-## Overview
+# Overview
 
 This project demonstrates an end-to-end Databricks Lakehouse pipeline using a real-world customer support tickets dataset. The workflow follows Bronze → Silver → Gold layering and is designed to mirror common GenAI pipeline preparation steps: data ingestion, quality validation, salvage/quarantine handling, and creation of LLM-ready text chunks.
 
