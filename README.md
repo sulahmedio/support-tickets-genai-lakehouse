@@ -10,7 +10,7 @@ Support tickets are a high-value GenAI use case because they contain unstructure
 - Summarization
 - Knowledge base retrieval (RAG)
 - Embeddings + semantic search
-- ustomer sentiment and satisfaction insights
+- Customer sentiment and satisfaction insights
 
 This project focuses on preparing high-quality, traceable data for those downstream use cases.
 
