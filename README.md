@@ -1,5 +1,6 @@
 <h1> Support Tickets GenAI Lakehouse Pipeline (Databricks) </h1>
-Overview
+
+## Overview
 
 This project demonstrates an end-to-end Databricks Lakehouse pipeline using a real-world customer support tickets dataset. The workflow follows Bronze → Silver → Gold layering and is designed to mirror common GenAI pipeline preparation steps: data ingestion, quality validation, salvage/quarantine handling, and creation of LLM-ready text chunks.
 
@@ -41,53 +42,53 @@ genai_support_pipeline.gold_llm_chunks
 This project ingests the CSV into Databricks and persists it as a Bronze Delta table under a project database/schema.
 
 2) Data profiling + schema contamination detection
-During Silver development, the dataset was profiled and found to contain:
-- High null rates in certain fields
-- Values appearing in the wrong columns (schema contamination)
+    *  During Silver development, the dataset was profiled and found to contain:
+    *  High null rates in certain fields
+    *  Values appearing in the wrong columns (schema contamination)
 
 3) Salvage + Quarantine approach (Silver)
 Instead of dropping large amounts of data, the Silver layer implements:
-- Salvage logic (recover known categorical values when misfiled)
-- Quarantine output with reject_reason for auditability
+   * Salvage logic (recover known categorical values when misfiled)
+   * Quarantine output with reject_reason for auditability
 
 Example outcomes observed during development:
-Bronze record count: 18,762
-Silver clean: 10,019
-Silver quarantine: 8,743
+   *  `` Bronze record count: 18,762 ``
+   *  `` Silver clean: 10,019 ``
+   *  `` Silver quarantine: 8,743 ``
 
 4) GenAI-ready text preparation (Gold)
 Silver outputs a consolidated text field (text_for_llm) and Gold converts records into chunked text rows suitable for:
-- LLM processing
-- Eembeddings generation
-- Downstream retrieval workflows
+    *  LLM processing
+    *  Eembeddings generation
+    *  Downstream retrieval workflows
 
 Chunking was implemented to be adaptive (no unnecessary fragmentation):
-- CHUNK_SIZE = 500
-- Observed text lengths: max_len = 437, avg_len ≈ 178.6
-- Result: most records naturally produced one chunk, but the pipeline scales automatically for longer text.
+    *  CHUNK_SIZE = 500
+    *  Observed text lengths: max_len = 437, avg_len ≈ 178.6
+    *  Result: most records naturally produced one chunk, but the pipeline scales automatically for longer text.
 
 # Notebooks
 Exported Databricks notebooks are available in /notebooks:
 - ```01_ingest_bronze```
-- ingest CSV → Bronze Delta table
+    *  ingest CSV → Bronze Delta table
 - ```02_silver_clean_validate_v2```
-- profiling, salvage logic, quarantine output, LLM-ready text field
+    *  profiling, salvage logic, quarantine output, LLM-ready text field
 - ```03_gold_llm_chunks```
-- chunking + gold table creation for GenAI workflows
+    *  chunking + gold table creation for GenAI workflows
 
 # How to Run (Databricks)
 1) Upload data
-- Download the dataset from Kaggle
-- Upload customer_support_tickets.csv into Databricks using the UI upload flow
+    *  Download the dataset from Kaggle
+    *  Upload customer_support_tickets.csv into Databricks using the UI upload flow
 
 2) Create/attach compute
-- Use an all-purpose cluster for notebooks
+    *  Use an all-purpose cluster for notebooks
 
 3) Run notebooks in order
-   Run in sequence:
-- ```01_ingest_bronze```
-- ```02_silver_clean_validate_v2```
-- ```03_gold_llm_chunks```
+- Run in sequence:
+    *  ```01_ingest_bronze```
+    *  ```02_silver_clean_validate_v2```
+    *  ```03_gold_llm_chunks```
 
 # Future Enhancements
 - Add automated expectations (e.g., Delta Live Tables expectations)
@@ -95,7 +96,9 @@ Exported Databricks notebooks are available in /notebooks:
 - Add embeddings generation (Databricks model endpoint) and vector search
 - Add dashboard (Databricks SQL or Power BI) for operational reporting
 
-# Author
-Sulaiman Ahmed
-- LinkedIn: https://www.linkedin.com/in/sulahmedio/
+---
+
+👤 Author
+- Sulaiman Ahmed
+- Databricks | Data Engineering & Analytics
 - GitHub: https://github.com/sulahmedio
